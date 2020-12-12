@@ -19,7 +19,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
-
+import android.content.Context;
 /**
  * Canvas2ImagePlugin.java
  *
@@ -86,7 +86,8 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 	private File savePhoto(Bitmap bmp,String extension,String strQuality,String picfolder) {
 		int quality=getQuality(strQuality);
 		File retVal = null;
-		
+		Context context = this.cordova.getActivity().getApplicationContext();
+
 		try {
 			Calendar c = Calendar.getInstance();
 			String date = "" + c.get(Calendar.DAY_OF_MONTH)
@@ -119,7 +120,8 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 					folder.mkdirs();
 				}
 			} else {
-				folder = Environment.getExternalStorageDirectory();
+				//folder = Environment.getExternalStorageDirectory();
+				folder = context.getCacheDir();
 			}
 			
 			File imageFile = new File(folder, "c2i_" + date.toString() + extension);
